@@ -1,5 +1,5 @@
 
-/* Step 2.6 Create the INVENTORY table*/
+/* Step 2.6 Create a table called INVENTORY with the provided column names and character types*/
 CREATE TABLE inventory(
   item_id int PRIMARY KEY,
   item_name varchar(40) NOT NULL,
@@ -9,14 +9,14 @@ CREATE TABLE inventory(
   received_on date  
 );
 
-/* Step 2.6 Created a view of the INVENTORY table */
+/* Step 2.6 Created a view of the table with all columns and view inventory_view */
 CREATE VIEW inventory_view AS
     SELECT item_id, item_name, category, quantity, unit_cost, received_on
     FROM inventory;
 
 SELECT * FROM inventory_view;
 
-/* Step 2.7 Insert 3 records and view the table */
+/* Step 2.7 Inserted 3 rows into the table and viewed inventory_view*/
 INSERT INTO inventory_view (item_id, item_name, category, quantity, unit_cost, received_on)
     VALUES("1", "Laser Mouse", "Peripherals", "25", "18.50", "2026-02-10");
 
@@ -28,7 +28,7 @@ INSERT INTO inventory_view (item_id, item_name, category, quantity, unit_cost, r
 
 SELECT * from inventory_view;
 
-/* Step 2.8 Select, update one record, then select again */
+/* Step 2.8 Selected the second row and updated the unit cost. Viewed the updates. */
 SELECT item_id, item_name, unit_cost FROM inventory WHERE item_id = 2;
 
 UPDATE inventory 
@@ -51,36 +51,34 @@ WHERE item_id = 3;
 
 SELECT * FROM inventory_view;
 
-/* Step 2.9 Create a view and select from it */
+/* Step 2.9 Created a view that was a copy of INVENTORY and viewed inventory_value in descending total_value order */
 CREATE VIEW inventory_value AS
     SELECT item_name, quantity, unit_cost, (quantity * unit_cost) AS total_value
     FROM inventory;
 
 SELECT * FROM inventory_value ORDER BY total_value DESC;
 
-/* Step 2.10 Copy the table, then give the copy a primary key */
+/* Step 2.10 I created a table that was a copy of INVENTORY.*/
 CREATE TABLE inventory_copy
     Select * FROM inventory;
 
-/* Step 2.10 Created a view */
+/* Step 2.10 Created a view of inventory_copy and viewed it. */
 CREATE VIEW inventory_copy_view AS
     SELECT * FROM inventory_copy;
 
 SELECT * FROM inventory_copy_view;
 
-/* Step 2.10 Altered inventory_copy to put back primary key */
+/* Step 2.10 I altered the copy table to put back the primary key */
 ALTER TABLE inventory_copy ADD PRIMARY KEY (item_id);
 
-/* Step 2.10 Testing prescence of primary key
+/* Step 2.10 I tested the prescence of the primary key
    Result: Duplicate entry '2' for key 'inventory.PRIMARY' */
 INSERT INTO inventory_view (item_id, item_name, category, quantity, unit_cost, received_on)
     VALUES("2", "Mechanical Keyboard", "Peripherals", "12", "64.00", "2026-03-05"); 
 
-/* Step 2.11 Add a new user and view the users */
-
+/* Step 2.11 I added a user called stockclerk and viewed whether it was added to the list of accounts present. */
 /* CREATE USER - created another account */
 CREATE USER 'stockclerk'@'localhost' IDENTIFIED BY 'Stock#2026';
-
 /* SELECT USER - allows ut to see accounts present on the server */
 SELECT user, host FROM mysql.user ORDER BY user;
 
